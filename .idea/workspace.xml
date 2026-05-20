@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7704148c-afa0-43bd-beac-3b4c2383d5e0" name="Changes" comment="" />
+    <list default="true" id="7704148c-afa0-43bd-beac-3b4c2383d5e0" name="Changes" comment="refactor workspace.xml to clean up change list and update git widget placeholder" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -98,8 +98,17 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1779246098354</updated>
-      <workItem from="1779246099448" duration="9459000" />
+      <workItem from="1779246099448" duration="10154000" />
     </task>
+    <task id="LOCAL-00001" summary="refactor workspace.xml to clean up change list and update git widget placeholder">
+      <option name="closed" value="true" />
+      <created>1779265783923</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1779265783924</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -107,6 +116,10 @@
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName=".env" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="refactor workspace.xml to clean up change list and update git widget placeholder" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor workspace.xml to clean up change list and update git widget placeholder" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
