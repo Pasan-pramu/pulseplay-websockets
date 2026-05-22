@@ -1,9 +1,12 @@
 import  {Router} from 'express'
 import {createMatchSchema, listMatchesQuerySchema} from "../validation/matches.js";
-import {matches} from "../db/schema.js";
+import {matches, commentary} from "../db/schema.js";
 import {db} from "../db/db.js";
 import {getMatchStatus} from "../utils/match-status.js";
 import {desc} from "drizzle-orm";
+import {createCommentarySchema} from "../validation/commentary.js";
+import {matchIdParamSchema} from "../validation/matches.js";
+import {commentaryRouter} from "./commentary.js";
 
 export const  matchRouter = Router();
 
@@ -66,3 +69,33 @@ matchRouter.post('/', async (req, res) => {
         res.status(500).json({error:'Failed to create match'});
     }
 })
+
+matchRouter.post('/:id/commentary', async (req, res) => {
+    const paramsParsed = matchIdParamSchema.safeParse(req.params);
+    if (!paramsParsed.success) {
+        return res.status(400).json({ error: 'Invalid params', details: JSON.stringify(paramsParsed.error) });
+    }
+
+    const bodyParsed = createCommentarySchema.safeParse(req.body);
+    if (!bodyParsed.success) {
+        return res.status(400).json({ error: 'Invalid payload', details: JSON.stringify(bodyParsed.error) });
+    }
+
+    try {
+        const [entry] = await db.insert(commentary).values({
+            matchId: paramsParsed.data.id,
+            ...bodyParsed.data,
+        }).returning();
+
+        if (req.app.locals.broadcastCommentaryAdded) {
+            req.app.locals.broadcastCommentaryAdded(paramsParsed.data.id, entry);
+        }
+
+        return res.status(201).json({ message: 'Commentary created successfully', commentary: entry });
+    } catch (e) {
+        console.error(e);
+        return res.status(500).json({ error: 'Failed to create commentary' });
+    }
+});
+
+matchRouter.use('/:id/commentary', commentaryRouter);
