@@ -2,7 +2,7 @@
 <div align="center">
   <br />
     <a href="" target="_blank">
-      <img src="public/readme/readme-hero.webp" alt="Project Banner">
+      <img src="public/readme.webp" alt="Project Banner">
     </a>
   <br /> 
 
