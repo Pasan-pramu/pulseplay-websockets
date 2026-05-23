@@ -5,13 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7704148c-afa0-43bd-beac-3b4c2383d5e0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/public/readme.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/data/data.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/validation/commentary.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/validation/commentary.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +41,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "feat/pubsub",
+    "git-widget-placeholder": "main",
     "junie.onboarding.icon.badge.shown": "true",
     "last_opened_file_path": "C:/Users/user/Desktop/sportz/public",
     "node.js.detected.package.eslint": "true",
@@ -108,6 +102,15 @@
       <workItem from="1779509161135" duration="1744000" />
       <workItem from="1779510998295" duration="2022000" />
     </task>
+    <task id="LOCAL-00001" summary="feat: add seeding functionality for match commentary and update package dependencies">
+      <option name="closed" value="true" />
+      <created>1779518783018</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1779518783018</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -118,7 +121,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="refactor error handling in matches routes" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor error handling in matches routes" />
+    <MESSAGE value="feat: add seeding functionality for match commentary and update package dependencies" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add seeding functionality for match commentary and update package dependencies" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

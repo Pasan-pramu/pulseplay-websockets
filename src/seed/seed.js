@@ -185,7 +185,7 @@ async function insertCommentary(matchId, entry) {
     throw new Error(`Failed to create commentary: ${response.status}`);
   }
   const responsePayload = await response.json();
-  return responsePayload.data;
+  return responsePayload.commentary ?? responsePayload.data ?? responsePayload;
 }
 
 // NOTE: Score delta logic is commented out because this codebase
