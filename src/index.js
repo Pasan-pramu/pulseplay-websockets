@@ -20,7 +20,7 @@ app.get('/', (_req, res) => {
     res.send('Sportz server is running.');
 });
 
-app.use(securityMiddleware());
+//app.use(securityMiddleware());
 
 app.use('/matches',matchRouter);
 app.use('/matches/:id/commentary', commentaryRouter);
