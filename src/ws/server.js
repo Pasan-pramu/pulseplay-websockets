@@ -59,26 +59,25 @@ function broadcastToMatch(matchId, payload) {
 }
 
 function handleMessage(socket, data) {
-    console.log('handleMessage received:', data.toString());
     let message;
 
     try {
         message = JSON.parse(data.toString());
     } catch {
         sendJson(socket, { type: 'error', message: 'Invalid JSON' });
+        return; // ← also add this return
     }
 
-    const matchId = Number(message?.matchId);
+    const matchId = Number(message?.matchId);  // convert to number
 
-    if(message?.type === "subscribe" && Number.isInteger(matchId)) {
-        console.log('Subscribing socket to matchId:', matchId);
+    if(message?.type === "subscribe" && Number.isInteger(matchId)) {  // ← use matchId not message.matchId
         subscribe(matchId, socket);
         socket.subscriptions.add(matchId);
         sendJson(socket, { type: 'subscribed', matchId });
         return;
     }
 
-    if(message?.type === "unsubscribe" && Number.isInteger(matchId)) {
+    if(message?.type === "unsubscribe" && Number.isInteger(matchId)) {  // ← same here
         unsubscribe(matchId, socket);
         socket.subscriptions.delete(matchId);
         sendJson(socket, { type: 'unsubscribed', matchId });
@@ -90,22 +89,30 @@ export function attachWebSocketServer(server) {
     const wss = new WebSocketServer({ server, path: '/ws', maxPayload: 1024 * 1024 });
 
     wss.on('connection', async (socket, req) => {
-        if(wsArcjet) {
+        socket.isAlive = true;
+        socket.subscriptions = new Set();
+        let ready = false;
+        const queue = [];
+
+        socket.on('pong', () => { socket.isAlive = true; });
+        socket.on('message', (data) => {
+            if (!ready) { queue.push(data); return; }
+            handleMessage(socket, data);
+        });
+        socket.on('close', () => cleanupSubscriptions(socket));
+        socket.on('error', () => socket.terminate());
+
+        if (wsArcjet) {
             try {
                 const decision = await wsArcjet.protect(req, {
-                    fingerprint: req.headers['x-forwarded-for'] ||
-                        req.socket.remoteAddress ||
-                        '127.0.0.1'
+                    fingerprint: req.headers['x-forwarded-for'] || req.socket.remoteAddress || '127.0.0.1'
                 });
-
-                if(decision.isDenied()) {
+                if (decision.isDenied()) {
                     const code = decision.reason.isRateLimit() ? 1013 : 1008;
                     const reason = decision.reason.isRateLimit() ? 'Rate limit exceeded' : 'Access denied';
-
                     socket.close(code, reason);
                     return;
                 }
-                console.log('Arcjet decision:', decision.conclusion);
             } catch (e) {
                 console.error('WS connection error', e);
                 socket.close(1011, 'Server security error');
@@ -113,27 +120,11 @@ export function attachWebSocketServer(server) {
             }
         }
 
-        socket.isAlive = true;
-        socket.on('pong', () => { socket.isAlive = true; });
-
-
-        socket.subscriptions = new Set();
-
+        ready = true;
         sendJson(socket, { type: 'welcome' });
 
-        socket.on('message', (data) => {
-            handleMessage(socket, data);
-        });
-
-        socket.on('error', () => {
-            socket.terminate();
-        });
-
-        socket.on('close', () => {
-            cleanupSubscriptions(socket);
-        })
-
-        socket.on('error', console.error);
+        for (const data of queue) handleMessage(socket, data);
+        queue.length = 0;
     });
 
     const interval = setInterval(() => {
